@@ -1,0 +1,171 @@
+<html>
+	<head>
+		<script
+  src="https://code.jquery.com/jquery-3.6.4.js"
+  integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+  crossorigin="anonymous"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	</head>
+	<body style="padding: 100px">
+		<div class="alert alert-info">
+			1. Ao clicar em lançar peça, deve validar se todos os campos estão preenchidos e exibir um alerta caso não estejam preenchidos<br />
+			2. Ao marcar o campo "apenas ajuste", deve-se esconder as opções de troca de peça do campo serviço realizado, e vice-versa <br />
+			3. Assim que os campos estiverem preenchidos e o usuário clicar em lançar peça, inserir uma linha nova na tabela com os dados digitados, e limpar os campos. <br />
+			4. todas as linhas da tabela precisam ter o botão de "remover", que ao ser clicado deverá deletar a linha específica.<br />
+		</div>
+		<div class="row">
+		  <div class="form-group col-md-3">
+		    <label for="codigo_peca">Código da Peça</label>
+		    <input type="text" class="form-control" id="codigo_peca" placeholder="Código da Peça">
+			<div id="codigo_peca_error"></div>
+		  </div>
+		  <div class="form-group col-md-3">
+		  		<label for="descricao_peca">Descrição Peça</label>
+		  		<input type="text" class="form-control" id="descricao_peca" placeholder="Descrição da Peça">
+				  <div id="descricao_peca_error"></div>
+		  </div>
+		  <div class="form-group col-md-2">
+		  		<label for="qtde">Qtde.</label>
+		  		<input type="number" class="form-control" id="qtde">
+				<div id="qtde_error"></div>
+		  </div>
+		  <div class="form-group col-md-1">
+			  <div class="checkbox">
+			    <label><br/>
+			      <input type="checkbox" id="apenas_ajuste"> Apenas Ajuste
+			    </label>
+			  </div>
+		  </div>
+		  <div class="form-group col-md-3">
+		  		<label for="qtde">Serviço realizado</label>
+		  		<select id="servico_realizado" class="form-control">
+		  			<option value="">Selecione o Serviço</option>
+		  			<option value="ajuste_calibragem" data-tipo="ajuste" style="display: none;" >Ajuste (Calibragem)</option>
+		  			<option value="ajuste_limpeza" data-tipo="ajuste" style="display: none;" >Ajuste (Limpeza)</option>
+		  			<option value="troca_gera_pedido" data-tipo="troca" >Troca de Peça (Gerando Pedido)</option>
+		  			<option value="troca_usa_estoque" data-tipo="troca" >Troca de Peça (Usando Estoque)</option>
+		  		</select>
+				  <div id="servico_realizado_error"></div>
+		  </div>
+		</div>
+		<div class="row" style="text-align: center;">
+			<button type="submit" class="btn btn-default">Lançar Peça</button>
+		</div>
+	</body>
+	<br /><br />
+	<table class="table">
+		<thead>
+			<th>Codigo Peça</th>
+			<th>Descrição Peça</th>
+			<th>Qtde.</th>
+			<th>Apenas Ajuste?</th>
+			<th>Serviço Realizado</th>
+			<th>Ações</th>
+		</thead>
+		<tbody id="dados_tabela">
+			<tr>
+				<td>Exemplo código</td>
+				<td>Exemplo descrição</td>
+				<td>1</td>
+				<td>Sim</td>
+				<td>Troca de Peça (Gerando Pedido)</td>
+				<td>
+					<button type="button" class="btn btn-danger">Remover</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<script>
+		//Requisito 1
+		$(function(){
+			$(".btn").click(function(){            
+			var codigo = $('#codigo_peca').val();
+			var descricao = $('#descricao_peca').val();            
+			var quantidade = $('#qtde').val();
+			var selecione = $('#servico_realizado').val();
+			
+			// Limpa as mensagens de erro anteriores
+			$('#codigo_peca_error').empty();
+			$('#descricao_peca_error').empty();
+			$('#qtde_error').empty();
+			$('servico_realizado_error').empty();
+			
+			// Verifica se algum dos campos está vazio e exibe uma mensagem de erro apropriada
+			if (codigo.length === 0) {
+				$('#codigo_peca_error').html('<div class="alert alert-danger" role="alert">Campo obrigatório.</div>');
+			}
+			
+			if (descricao.length === 0) {
+				$('#descricao_peca_error').html('<div class="alert alert-danger" role="alert">Campo obrigatório.</div>');
+			}
+		
+			if (quantidade.length === 0) {
+				$('#qtde_error').html('<div class="alert alert-danger" role="alert">Campo obrigatório.</div>');
+			}
+
+			if (selecione.length === 0) {
+				$('#servico_realizado_error').html('<div class="alert alert-danger" role="alert">Campo obrigatório.</div>');
+			}
+			
+			// Se algum campo estiver vazio, impede o envio do formulário
+			if (codigo.length === 0 || descricao.length === 0 || quantidade.length === 0) {
+				return false;
+			}
+
+			//Requisito 3
+				//Prevenir o comportamento padrão do formulário
+				event.preventDefault();
+				console.log("alô");
+				// Validar os campos do formulário
+				var codigoPeca = $("#codigo_peca").val().trim();
+				var descricaoPeca = $("#descricao_peca").val().trim();
+				var qtde = $("#qtde").val().trim();
+				var apenasAjuste = $("#apenas_ajuste").is(":checked");
+				var servicoRealizado = $("#servico_realizado").val().trim();
+
+					// Adicionar a nova linha na tabela
+				var newRow = $("<tr>");
+					newRow.append($("<td>").text(codigoPeca));
+					newRow.append($("<td>").text(descricaoPeca));
+					newRow.append($("<td>").text(qtde));
+					newRow.append($("<td>").text(apenasAjuste ? "Sim" : "Não"));
+					newRow.append($("<td>").text(servicoRealizado));
+					newRow.append($("<td>").append($("<button>").addClass("btn btn-danger remover").text("Remover")));
+					$("#dados_tabela").append(newRow);
+			
+					// Limpar os campos do formulário
+					$("#codigo_peca").val("");
+					$("#descricao_peca").val("");
+					$("#qtde").val("");
+					$("#apenas_ajuste").prop("checked", false);
+					$("#servico_realizado").val("");
+			});
+		
+		//Requisito 2
+			// quando a checkbox for clicada
+			$('#apenas_ajuste').click(function() {
+				console.log("oi");
+			  // se estiver checked, mostra apenas a opção de manutenção
+			  if ($(this).is(':checked')) {
+				$('option[data-tipo=ajuste]').show();
+				$('option[data-tipo=troca]').hide();
+			  // senão, mostra apenas a opção de troca de peça
+			  } else {
+				$('option[data-tipo=ajuste]').hide();
+				$('option[data-tipo=troca]').show();
+			  }
+			});
+		//Requisito 4
+		$(document).on("click", ".remover", function(event){
+		 $(this).closest("tr").remove();
+
+		});
+		});
+		
+	</script>
+</html>

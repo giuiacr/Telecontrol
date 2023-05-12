@@ -1,0 +1,48 @@
+
+<button 
+type="submit" 
+id="btn" 
+data-os="60435234" 
+data-produto="CHURRASQUEIRA ELÉTRICA" 
+data-json='{"voltagem": "220v", "ativo": true}'
+>
+
+</button>
+
+<script>
+
+	/*
+	eventos mais usados:
+
+	CLICK
+	CHANGE
+	BLUR
+	FOCUS
+	*/
+
+	$("#btn").click(function(event){
+
+		//prevenir o comportamento padrão,se for um formulário não vai dar um submit, se for um href não vai redirecionar
+		event.preventDefault();
+
+		let os = $(this).data("os");
+		let produto = $(this).data("produto");
+
+
+	});
+
+	$(document).on("click", "#btn", function(event){
+
+
+
+	})
+
+	let elementoButton = $("<button></button>", {
+		"class": "btn",
+		"id": "btn-acao"
+		click: function(){
+
+		}
+	});
+
+</script>

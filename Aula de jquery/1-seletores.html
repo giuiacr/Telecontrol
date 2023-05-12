@@ -1,0 +1,185 @@
+
+<style>
+	/* seleciona o elemento que seja o 'filho' direto */
+	table > thead > tr > th {  }
+
+	/* seleciona qualquer elemento th dentro da tabela  */
+	table th {  }
+
+	/* seleciona todos os elementos 'irmãos' */
+	h2 ~ p { }
+</style>
+<div>
+  <p></p>
+  <h2></h2>
+  <p>ELEMENTO SELECIONADO</p>
+  <div>
+    <p></p>
+  </div>
+  <p>ELEMENTO SELECIONADO</p>
+</div>
+
+================================================================================================
+
+<style>
+	/* seleciona o primeiro elemento 'irmão' */
+	h2 + p { }
+</style>
+<div>
+  <p></p>
+  <h2></h2>
+  <p>ELEMENTO SELECIONADO</p>
+  <div>
+    <p></p>
+  </div>
+  <p></p>
+</div>
+
+=================================================================================================
+
+<style>
+	/* seleciona todos os links que possuem o parametro href */
+	a[href] {  }
+
+	/*seleciona os links que sejam iguais o valor informado */
+	a[href="http://google.com/"] {   }
+
+	/* seleciona os links que tem a palavra chave 'cadastro_os' em qualquer posição*/
+	a[href*="cadastro_os"] {   }
+
+	/* seleciona os links que possuem a palavra chave 'admin' no começo */
+	a[href^="admin"] {   }
+
+	/* seleciona os links que terminam com .php */
+	a[href$=".php"] {   }
+</style>
+
+<a href="admin/cadastro_os.php" />
+
+=================================================================================================
+
+<style>
+	/* primeiro elemento LI dentro do UL */
+	li:first-child {  }
+
+	/* ultimo elemento LI dentro do UL */
+	li:last-child {  }
+
+	/* qualquer div que seja o único elemento dentro de um elemento pai */
+	div:only-child {  }
+</style>
+<ul>
+  <li>ELEMENTO SELECIONADO</li>
+  <li>
+    <div>ELEMENTO SELECIONADO</div>
+  </li>
+  <li>
+    <div></div>
+    <div></div>
+  </li>
+  <li>ELEMENTO SELECIONADO</li>
+</ul>
+
+
+=================================================================================================
+
+<style>
+	/* 
+		Ignora todos os outros elementos dentro da div,
+		buscando apenas o elemento do tipo informado	
+	*/
+	p:first-of-type {  }
+	p:last-of-type {...}
+	img:only-of-type {...}
+</style>
+
+<div>
+  <h1></h1>
+  <p>ELEMENTO SELECIONADO</p>
+  <p></p>
+  <img src="#" /><!-- IMAGEM SELECIONADA -->
+  <p>ELEMENTO SELECIONADO</p>
+  <h6></h6>
+</div>
+
+=================================================================================================
+
+<style>
+	/* aplicado no terceiro elemento */
+	li:nth-child(3) {  }
+</style>
+
+<ul>
+  <li></li>
+  <li></li>
+  <li>ELEMENTO SELECIONADO</li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+
+=================================================================================================
+
+<style>
+	/* aplicado a cada 3 elementos */
+	li:nth-child(3n) {  }
+</style>
+
+<ul>
+  <li></li>
+  <li></li>
+  <li>ELEMENTO SELECIONADO</li>
+  <li></li>
+  <li></li>
+  <li>ELEMENTO SELECIONADO</li>
+</ul>
+
+=================================================================================================
+
+<style>
+	/* aplicado a cada 2 elementos, começando no terceiro */
+	li:nth-child(2n+3) {   }
+</style>
+
+<ul>
+  <li></li>
+  <li></li>
+  <li>ELEMENTO SELECIONADO</li>
+  <li></li>
+  <li>ELEMENTO SELECIONADO</li>
+  <li></li>
+</ul>
+
+=================================================================================================
+
+<style>
+	/* aplicado a cada 3 elementos com a tag '<p>', ignorando o resto */
+	p:nth-of-type(3n) {  }
+</style>
+
+<div>
+  <h1></h1>
+  <p></p>
+  <p></p>
+  <p>ELEMENTO SELECIONADO</p>
+  <h2></h2>
+  <p></p>
+  <p></p>
+  <p>ELEMENTO SELECIONADO</p>
+</div>
+
+================================================================================================
+
+<style>
+
+	input[type=checkbox]:checked {  }
+
+	select > option:selected {  }
+
+	/* seleciona todos os inputs que não estão checados  */
+	input[type=checkbox]:not(:checked) {  }
+
+	/* seleciona todas as divs que não contém a classe */
+	div:not(.ativo) {  }
+
+</style>
